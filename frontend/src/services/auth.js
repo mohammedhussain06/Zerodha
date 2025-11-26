@@ -1,8 +1,8 @@
 const API_BASE_URL =
-  process.env.REACT_APP_API_BASE_URL || "http://localhost:3002";
+  process.env.REACT_APP_API_URL || process.env.REACT_APP_API_BASE_URL;
 
 export const DASHBOARD_URL =
-  process.env.REACT_APP_DASHBOARD_URL || "http://localhost:3001";
+  process.env.REACT_APP_DASHBOARD_URL || process.env.REACT_APP_LANDING_URL;
 
 const handleResponse = async (response) => {
   const payload = await response.json().catch(() => ({}));
