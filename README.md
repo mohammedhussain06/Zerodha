@@ -65,23 +65,13 @@ Zerodha/
    cd Zerodha
    ```
 
-2. **Install Frontend Dependencies**
+2. **Install Dependencies (root command)**
    ```bash
-   cd frontend
    npm install
    ```
 
-3. **Install Dashboard Dependencies**
-   ```bash
-   cd ../dashboard
-   npm install
-   ```
+   The root `package.json` bootstraps all three workspaces (`frontend/`, `dashboard/`, `backend/`) so you no longer need to install each package manually. If you prefer to install them individually you still can by running `npm install` inside each directory.
 
-4. **Install Backend Dependencies**
-   ```bash
-   cd ../backend
-   npm install
-   ```
 
 5. **Environment Variables**
 
@@ -111,37 +101,52 @@ Zerodha/
 
 1. **Start Backend Server** (Port 3002)
    ```bash
-   cd backend
-   npm start
-   # or
-   nodemon index.js
+   npm run start:backend        # runs node backend/index.js
+   # or for local dev hot reload
+   cd backend && npm start      # uses nodemon
    ```
 
 2. **Start Frontend** (Port 3000)
    ```bash
-   cd frontend
-   npm start
+   npm run start:frontend       # equivalent to (cd frontend && npm start)
    ```
 
 3. **Start Dashboard** (Port 3001)
    ```bash
-   cd dashboard
-   npm start
+   npm run start:dashboard      # equivalent to (cd dashboard && npm start)
    ```
 
 ### Production Build
 
 1. **Build Frontend**
    ```bash
-   cd frontend
-   npm run build
+   npm run build:frontend
    ```
 
-2. **Build Dashboard**
+2. **Build Dashboard (default `npm run build`)**
    ```bash
-   cd dashboard
-   npm run build
+   npm run build        # builds dashboard by default
+   # or explicitly
+   npm run build:dashboard
    ```
+
+> The root `package.json` can easily be extended with additional scripts (e.g., `npm run build:backend`) if you add a production build script to the backend service.
+
+## ☁️ Deploying to Render
+
+Use the new root-level scripts to simplify Render deployments:
+
+1. **Repository Settings**
+   - Root Directory: `.` (project root that contains the new `package.json`)
+   - Build Command: `npm run build` (this runs the dashboard React build via `npm --prefix dashboard run build`)
+   - Start Command (for the API/Web Service): `npm run start:backend` or `node backend/index.js`
+
+2. **Static Frontend/Dashboard**
+   - To deploy the landing site or dashboard as a Static Site service, point Render's Root Directory to `frontend` or `dashboard`, keep `npm install && npm run build`, and set Publish Directory to `build/`.
+
+3. **Environment Variables**
+   - Configure the `.env` values shown above via Render's **Environment** tab instead of committing them to git.
+
 
 ## 📝 API Endpoints
 
