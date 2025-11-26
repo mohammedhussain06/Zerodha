@@ -92,6 +92,61 @@ img {
   box-shadow: 0 4px 12px rgba(65, 132, 243, 0.4);
 }
 
+.navbar-collapse-custom {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.navbar-collapse-custom ul {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.navbar-toggle-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  flex-direction: column;
+  padding: 0;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.navbar-toggle-btn span {
+  width: 20px;
+  height: 2px;
+  background: #1f2937;
+  border-radius: 999px;
+  transition: transform 0.2s ease, opacity 0.2s ease, width 0.2s ease;
+}
+
+.navbar-toggle-btn.is-active span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.navbar-toggle-btn.is-active span:nth-child(2) {
+  opacity: 0;
+}
+
+.navbar-toggle-btn.is-active span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  z-index: 900;
+  backdrop-filter: blur(2px);
+}
+
 .cta-button {
   width: 20%;
   min-width: 180px;
@@ -312,6 +367,39 @@ img {
     padding: 1rem 0;
   }
 
+  .navbar-toggle-btn {
+    display: flex;
+    margin-left: auto;
+  }
+
+  .navbar-collapse-custom {
+    position: absolute;
+    top: 72px;
+    left: 0;
+    right: 0;
+    background: #fff;
+    padding: 1.25rem;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 15px 30px rgba(15, 23, 42, 0.15);
+    flex-direction: column;
+    transform: translateY(-8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 950;
+  }
+
+  .navbar-collapse-custom.show {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .navbar-collapse-custom ul {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
   .nav-link-styled,
   .nav-link-login {
     margin-left: 0;
@@ -356,6 +444,10 @@ img {
 @media (max-width: 768px) {
   .zerodha-navbar {
     padding: 8px 0;
+  }
+
+  .navbar-collapse-custom {
+    top: 64px;
   }
 
   .brand-logo {
@@ -419,6 +511,10 @@ img {
 
   .brand-logo {
     width: 40%;
+  }
+
+  .navbar-collapse-custom {
+    top: 58px;
   }
 
   .footer-logo {

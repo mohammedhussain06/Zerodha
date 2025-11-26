@@ -261,6 +261,49 @@ code {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
+}
+
+.menu-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.menu-toggle-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease;
+}
+
+.menu-toggle-btn span {
+  width: 20px;
+  height: 2px;
+  background: #111827;
+  border-radius: 999px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.menu-toggle-btn.is-active span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.menu-toggle-btn.is-active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle-btn.is-active span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
 }
 
 .logo {
@@ -397,6 +440,14 @@ code {
 .logout-btn:hover {
   background: #fef2f2;
   color: #dc2626;
+}
+
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(2px);
+  z-index: 20;
 }
 
 /* sudo selectors */
@@ -1057,6 +1108,10 @@ code {
     gap: 0.5rem;
   }
 
+  .menu-toggle-btn {
+    display: flex;
+  }
+
   .indices-container {
     flex-direction: row;
     gap: 1rem;
@@ -1072,6 +1127,55 @@ code {
 
   .menus li {
     margin-right: 15px;
+  }
+
+  .menus {
+    position: absolute;
+    top: 72px;
+    left: 16px;
+    right: 16px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    flex-direction: column;
+    box-shadow: 0 24px 40px rgba(15, 23, 42, 0.2);
+    transform: translateY(-8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 25;
+  }
+
+  .menus.mobile-open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .menus ul {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .menus li {
+    width: 100%;
+    margin: 0;
+  }
+
+  .menus hr {
+    width: 100%;
+    border-top: 1px solid #e5e7eb;
+    margin: 1rem 0;
+  }
+
+  .profile-section {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .profile {
+    justify-content: space-between;
   }
 
   .watchlist-number {

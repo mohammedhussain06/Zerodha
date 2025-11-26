@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const LANDING_URL = process.env.REACT_APP_LANDING_URL || "http://localhost:3000";
@@ -6,9 +6,11 @@ const LANDING_URL = process.env.REACT_APP_LANDING_URL || "http://localhost:3000"
 const Menu = () => {
   const [selectedMenu, setSelectedMenu] = useState(0);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleMenuClick = (index) => {
     setSelectedMenu(index);
+    closeMobileMenu();
   };
 
   const handleProfileClick = () => {
@@ -20,13 +22,48 @@ const Menu = () => {
     window.location.href = LANDING_URL;
   };
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen((prev) => !prev);
+  };
+
+  const closeMobileMenu = () => {
+    if (window.innerWidth < 992) {
+      setIsMobileMenuOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 992) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const menuClass = "menu";
   const activeMenuClass = "menu selected";
 
   return (
     <div className="menu-container">
-      <img src="logo.png" alt="Zerodha" style={{ width: "50px" }} />
-      <div className="menus">
+      <div className="menu-header">
+        <img src="logo.png" alt="Zerodha" style={{ width: "50px" }} />
+        <button
+          className={`menu-toggle-btn ${
+            isMobileMenuOpen ? "is-active" : ""
+          }`.trim()}
+          aria-label="Toggle menu"
+          aria-expanded={isMobileMenuOpen}
+          onClick={toggleMobileMenu}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+      </div>
+      <div className={`menus ${isMobileMenuOpen ? "mobile-open" : ""}`}>
         <ul>
           <li>
             <Link
@@ -110,6 +147,9 @@ const Menu = () => {
           )}
         </div>
       </div>
+      {isMobileMenuOpen && (
+        <div className="menu-overlay" onClick={closeMobileMenu} />
+      )}
     </div>
   );
 };
