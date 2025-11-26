@@ -1,16 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import { positions } from "../data/data";
-import { useState, useEffect } from "react";
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3002";
 
 const Positions = () => {
   const [allPositions, setAllPositions] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:3002/allPositions").then((res) => {
-      setAllPositions(res.data);
-    });
-  }, []);
+    const controller = new AbortController();
+    axios
+      .get(`${API_URL}/allPositions`, { signal: controller.signal })
+      .then((res) => setAllPositions(res.data))
+      .catch((err) => {
+        if (err.name !== "CanceledError") {
+          console.error("Failed to load positions", err);
+          setAllPositions([]);
+        }
+      });
+
+    return () => controller.abort();
+  }, [API_URL]);
 
   return (
     <>

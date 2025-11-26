@@ -1,16 +1,25 @@
 import React, { useState, useEffect } from "react";
-import axios, { all } from "axios";
+import axios from "axios";
 import { VerticalGraph } from "./VerticalGraph";
+
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3002";
 
 const Holdings = () => {
   const [allHoldings, setAllHoldings] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3002/allHoldings").then((res) => {
-      // console.log(res.data);
-      setAllHoldings(res.data);
-    });
-  }, []);
+    const controller = new AbortController();
+    axios
+      .get(`${API_URL}/allHoldings`, { signal: controller.signal })
+      .then((res) => setAllHoldings(res.data))
+      .catch((err) => {
+        if (err.name !== "CanceledError") {
+          console.error("Failed to load holdings", err);
+          setAllHoldings([]);
+        }
+      });
+    return () => controller.abort();
+  }, [API_URL]);
 
   const labels = allHoldings.map((subArray) => subArray["name"]);
 

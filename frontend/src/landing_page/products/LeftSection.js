@@ -10,47 +10,57 @@ function LeftSection({
   appStore,
 }) {
   return (
-    <div className="container p-3 p-lg-5">
-      <div className="row gy-4 align-items-center">
-        <div className="col-12 col-lg-6 p-3 p-lg-5 text-center text-lg-start">
-          <img src={imageURL} alt={productName} className="img-fluid" style={{ maxWidth: "100%" }} />
-        </div>
-
-        <div className="col-12 col-lg-6 p-3 p-lg-5 mt-lg-5">
-          <h1>{productName}</h1>
-          <p>{productDescription}</p>
-
-          <div className="d-flex flex-wrap gap-3 gap-lg-0">
-            <a href={tryDemo} style={{ textDecoration: "none" }}>
-              Try demo
-            </a>
-            <a
-              href={learnMore}
-              className="ms-lg-5"
-              style={{ textDecoration: "none" }}
-            >
-              Learn more
-            </a>
+    <section className="product-section">
+      <div className="container p-3 p-lg-5">
+        <div className="row gy-4 align-items-center">
+          <div className="col-12 col-lg-6 product-media text-center text-lg-start">
+            <img src={imageURL} alt={productName} className="img-fluid" />
           </div>
 
-          <div className="mt-4 mt-lg-5 d-flex flex-wrap gap-3">
-            <a href={googlePlay}>
-              <img src="media/images/googlePlayBadge.svg" alt="Google Play" className="img-fluid" style={{ maxHeight: "45px" }} />
-            </a>
+          <div className="col-12 col-lg-6 product-content">
+            <h2>{productName}</h2>
+            <p>{productDescription}</p>
 
-            <a href={appStore} className="ms-lg-5">
-              <img
-                src="media/images/appStoreBadge.svg"
-                alt="App Store"
-                className="img-fluid"
-                style={{ maxHeight: "45px" }}
-              />
-            </a>
+            <div className="product-links">
+              <a href={tryDemo} aria-label={`Try ${productName} demo`}>
+                Try demo
+              </a>
+              <a
+                href={learnMore}
+                className="ms-lg-4"
+                aria-label={`Learn more about ${productName}`}
+              >
+                Learn more
+              </a>
+            </div>
+
+            <div className="store-badges">
+              <a href={googlePlay} aria-label={`${productName} on Google Play`}>
+                <img
+                  src="media/images/googlePlayBadge.svg"
+                  alt="Download on Google Play"
+                  className="store-badge"
+                />
+              </a>
+
+              <a
+                href={appStore}
+                className="ms-lg-3"
+                aria-label={`${productName} on the App Store`}
+              >
+                <img
+                  src="media/images/appstoreBadge.svg"
+                  alt="Download on the App Store"
+                  className="store-badge"
+                />
+              </a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
 export default LeftSection;
+

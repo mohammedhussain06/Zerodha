@@ -12,10 +12,19 @@ function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
   const closeMenu = () => setIsMenuOpen(false);
+  const handleNavSelect = () => {
+    scrollToTop();
+    closeMenu();
+  };
 
   useEffect(() => {
+    scrollToTop();
     closeMenu();
   }, [location.pathname]);
 
@@ -33,7 +42,7 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg zerodha-navbar">
       <div className="container p-2">
-        <Link className="navbar-brand" to="/" onClick={closeMenu}>
+        <Link className="navbar-brand" to="/" onClick={handleNavSelect}>
           <img
             src="media/images/logo.svg"
             alt="logo"
@@ -61,33 +70,33 @@ function Navbar() {
                 <Link
                   className="nav-link nav-link-styled"
                   to={item.path}
-                  onClick={closeMenu}
+                  onClick={handleNavSelect}
                 >
                   {item.label}
                 </Link>
               </li>
             ))}
-            <li className="nav-item">
+              <li className="nav-item">
               <Link
                 className="nav-link nav-link-login"
                 to="/login"
-                onClick={closeMenu}
+                onClick={handleNavSelect}
               >
-                Login
-              </Link>
-            </li>
-            <li className="nav-item">
+                  Login
+                </Link>
+              </li>
+              <li className="nav-item">
               <Link
                 className="nav-link nav-link-signup"
                 to="/signup"
-                onClick={closeMenu}
+                onClick={handleNavSelect}
               >
-                Signup
-              </Link>
-            </li>
-          </ul>
+                  Signup
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
       {isMenuOpen && <div className="nav-overlay" onClick={closeMenu} />}
     </nav>
   );

@@ -49,7 +49,7 @@ const Menu = () => {
   return (
     <div className="menu-container">
       <div className="menu-header">
-        <img src="logo.png" alt="Zerodha" style={{ width: "50px" }} />
+      <img src="logo.png" alt="Zerodha" style={{ width: "50px" }} />
         <button
           className={`menu-toggle-btn ${
             isMobileMenuOpen ? "is-active" : ""
